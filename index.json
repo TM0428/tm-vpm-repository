@@ -111,6 +111,27 @@
           "license": "MIT"
         }
       }
+    },
+    "com.428-tm.costume-switcher-for-ma": {
+      "versions": {
+        "0.1.0": {
+          "name": "com.428-tm.costume-switcher-for-ma",
+          "version": "0.1.0",
+          "displayName": "CostumeSwitcherForMA",
+          "description": "A tool to switch costumes using Modular Avatar.",
+          "unity": "2022.3",
+          "author": {
+            "name": "428-tm"
+          },
+          "dependencies": {
+            "nadena.dev.modular-avatar": "^1.9.0"
+          },
+          "vpmDependencies": {
+            "nadena.dev.modular-avatar": "^1.9.0"
+          },
+          "url": "https://github.com/TM0428/CostumeSwitcherForMA/releases/download/0.1.0/CostumeSwitcherForMA-0.1.0.zip"
+        }
+      }
     }
   }
 }

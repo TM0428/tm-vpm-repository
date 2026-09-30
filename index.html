@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TM0428 VPM Repository</title>
-  <script type="module" src="https://unpkg.com/@fluentui/web-components"></script>
   <link rel="stylesheet" href="styles.css">
   <link rel="icon" href="./favicon.ico">
 </head>
@@ -119,6 +118,7 @@
       </div>
     </fluent-dialog>
 
+    <p id="packageStatus" role="status">パッケージ一覧を読み込み中です。表示されない場合はページを再読み込みしてください。</p>
     <fluent-card class="packages">
       <fluent-data-grid id="packageGrid" role="grid" grid-template-columns="1fr 100px 220px">
         <fluent-data-grid-row row-type="header">

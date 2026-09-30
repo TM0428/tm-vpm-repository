@@ -1,4 +1,7 @@
-import { baseLayerLuminance, StandardLuminance } from 'https://unpkg.com/@fluentui/web-components';
+// Keep the v2 components and design-token API compatible with this listing.
+import { baseLayerLuminance, StandardLuminance, provideFluentDesignSystem, allComponents } from 'https://unpkg.com/@fluentui/web-components@2.6.1/dist/web-components.min.js';
+
+provideFluentDesignSystem().register(allComponents);
 
 const LISTING_URL = "https://tm0428.github.io/tm-vpm-repository/index.json";
 let PACKAGES = {};
@@ -15,6 +18,7 @@ const setTheme = () => {
 async function fetchAndRenderPackages() {
   try {
     const response = await fetch('index.json');
+    if (!response.ok) throw new Error(`Failed to load index.json: ${response.status}`);
     const data = await response.json();
     
     const packageGrid = document.getElementById('packageGrid');
@@ -22,7 +26,9 @@ async function fetchAndRenderPackages() {
     if (data.packages) {
       for (const [id, pkgData] of Object.entries(data.packages)) {
         const versions = Object.keys(pkgData.versions).sort((a, b) => b.localeCompare(a, undefined, { numeric: true }));
-        const latestVersion = versions[0];
+        // Prefer a stable release over a prerelease such as 1.0.2-beta.
+        const latestVersion = versions.find(version => !version.includes('-')) || versions[0];
+        if (!latestVersion) continue;
         const latestPkg = pkgData.versions[latestVersion];
 
         PACKAGES[id] = {
@@ -71,8 +77,14 @@ async function fetchAndRenderPackages() {
       }
       setupEventListeners();
     }
+    const packageStatus = document.getElementById('packageStatus');
+    packageStatus.textContent = Object.keys(PACKAGES).length ? '' : '登録されたパッケージがありません。';
+    packageStatus.hidden = Object.keys(PACKAGES).length > 0;
   } catch (err) {
     console.error("Error fetching packages:", err);
+    const packageStatus = document.getElementById('packageStatus');
+    packageStatus.textContent = 'パッケージ一覧を読み込めませんでした。ページを再読み込みしてください。';
+    packageStatus.hidden = false;
   }
 }
 
